@@ -42,5 +42,7 @@ export * from "@/brand";
 export * from "@/regions";
 export * from "@/seo/faqs";
 export * from "@/seo/StructuredData";
+export { default as StructuredData } from "@/seo/StructuredData";
 export * from "@/seo/LandingSEOHead";
+export { default as LandingSEOHead } from "@/seo/LandingSEOHead";
 export { default as SEOHead } from "@/seo/SEOHead";
