@@ -2,7 +2,7 @@ import * as class_variance_authority_types from 'class-variance-authority/types'
 import * as React$1 from 'react';
 import { ReactNode, KeyboardEvent, Ref, ComponentProps } from 'react';
 import { VariantProps } from 'class-variance-authority';
-import { Label as Label$1, Select as Select$1 } from 'radix-ui';
+import { Label as Label$1, Separator as Separator$1, Select as Select$1 } from 'radix-ui';
 import { CountryCode } from 'libphonenumber-js/max';
 export { CountryCode } from 'libphonenumber-js/max';
 import * as Sentry from '@sentry/react';
@@ -30,6 +30,53 @@ declare const Button: React$1.ForwardRefExoticComponent<Omit<React$1.ClassAttrib
 } & class_variance_authority_types.ClassProp) | undefined) => string> & {
     asChild?: boolean;
 }, "ref"> & React$1.RefAttributes<HTMLButtonElement>>;
+
+/**
+ * `forwardRef` + `asChild` mirror `Button`'s contract, and both exist because a
+ * card is not always a `<div>`: a list of card-shaped rows must stay `<li>`s
+ * inside their `<ul>` (dropping the list semantics is an a11y regression), and
+ * grid/scroll containers need a ref. Without these, those surfaces had to
+ * hand-roll the border/radius/fill triple inline and drift off the shared
+ * radius and shadow tokens — which is the whole point of the primitive.
+ * (Spelling that triple out here would trip the drift grep in
+ * `scripts/check-design-drift.mjs`, which does not skip comments.)
+ */
+declare const Card: React$1.ForwardRefExoticComponent<Omit<React$1.ClassAttributes<HTMLDivElement> & React$1.HTMLAttributes<HTMLDivElement> & {
+    size?: "default" | "sm";
+    asChild?: boolean;
+}, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
+declare function CardHeader({ className, ...props }: React$1.ComponentProps<"div">): React$1.JSX.Element;
+declare function CardTitle({ className, ...props }: React$1.ComponentProps<"div">): React$1.JSX.Element;
+declare function CardDescription({ className, ...props }: React$1.ComponentProps<"div">): React$1.JSX.Element;
+declare function CardAction({ className, ...props }: React$1.ComponentProps<"div">): React$1.JSX.Element;
+declare function CardContent({ className, ...props }: React$1.ComponentProps<"div">): React$1.JSX.Element;
+declare function CardFooter({ className, ...props }: React$1.ComponentProps<"div">): React$1.JSX.Element;
+
+declare function Label({ className, ...props }: React$1.ComponentProps<typeof Label$1.Root>): React$1.JSX.Element;
+
+declare function FieldSet({ className, ...props }: React.ComponentProps<"fieldset">): React$1.JSX.Element;
+declare function FieldLegend({ className, variant, ...props }: React.ComponentProps<"legend"> & {
+    variant?: "legend" | "label";
+}): React$1.JSX.Element;
+declare function FieldGroup({ className, ...props }: React.ComponentProps<"div">): React$1.JSX.Element;
+declare const fieldVariants: (props?: ({
+    orientation?: "horizontal" | "vertical" | "responsive" | null | undefined;
+} & class_variance_authority_types.ClassProp) | undefined) => string;
+declare function Field({ className, orientation, ...props }: React.ComponentProps<"div"> & VariantProps<typeof fieldVariants>): React$1.JSX.Element;
+declare function FieldContent({ className, ...props }: React.ComponentProps<"div">): React$1.JSX.Element;
+declare function FieldLabel({ className, ...props }: React.ComponentProps<typeof Label>): React$1.JSX.Element;
+declare function FieldTitle({ className, ...props }: React.ComponentProps<"div">): React$1.JSX.Element;
+declare function FieldDescription({ className, ...props }: React.ComponentProps<"p">): React$1.JSX.Element;
+declare function FieldSeparator({ children, className, ...props }: React.ComponentProps<"div"> & {
+    children?: React.ReactNode;
+}): React$1.JSX.Element;
+declare function FieldError({ className, children, errors, ...props }: React.ComponentProps<"div"> & {
+    errors?: Array<{
+        message?: string;
+    } | undefined>;
+}): React$1.JSX.Element | null;
+
+declare function Separator({ className, orientation, decorative, ...props }: React$1.ComponentProps<typeof Separator$1.Root>): React$1.JSX.Element;
 
 declare function Empty({ className, ...props }: React.ComponentProps<"div">): React$1.JSX.Element;
 declare function EmptyHeader({ className, ...props }: React.ComponentProps<"div">): React$1.JSX.Element;
@@ -151,8 +198,6 @@ declare function activateProps(onActivate: () => void, opts?: {
     tabIndex: 0;
     onKeyDown: (e: KeyboardEvent) => void;
 };
-
-declare function Label({ className, ...props }: React$1.ComponentProps<typeof Label$1.Root>): React$1.JSX.Element;
 
 /**
  * The nested-overlay contract: what a portaled overlay (Popover, Select, DropdownMenu, …) must
@@ -1049,4 +1094,20 @@ declare function SEOHead({ title, description, path, ogImage, noIndex, siteName,
 type Props = Omit<ComponentProps<typeof SEOHead>, "siteName" | "baseUrl">;
 declare function LandingSEOHead(props: Props): React$1.JSX.Element;
 
-export { AI_INTEGRATION_EMAIL, AI_INTEGRATION_MAILTO, AI_INTEGRATION_SUBJECT, APP_STORE_URL, APP_URL, type AuthorSocialLinks, BADGE_BASE_URL, BASE_URL, Badge, type BadgeVariant, type BlogAuthor, type BlogBrand, type BlogPost, type BlogPostMeta, type Breadcrumb, Button, CONSENT_EVENT, CONSENT_STORAGE_KEY, CONTACT_EMAIL, CONTACT_MAILTO, CONTACT_PATH, COUNTRY_CODES, CURRENCIES, CardListSkeleton, ChatSkeleton, type ConsentDecision, type CtaLocation, type Currency, type CurrencyCode, DEFAULT_COUNTRY_CODE, DEFAULT_CURRENCY, DEFAULT_PHONE_COUNTRY, DEFAULT_REGION, DEMO_PATH, EQUATEIT_URL, EU_COOKIE_NAME, Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyState, EmptyTitle, FIND_A_TUTOR_PATH, GOOGLE_PLAY_URL, IconTile, type IconTileProps, Input, type InteractiveSurfaceVariants, ItemListSkeleton, LINKEDIN_URL, Label, type LandingCtaId, type LandingFaq, LandingSEOHead, type Language, type LayoutHint, type NormalizedError, PHONE_COUNTRIES, PRICING_PATH, PRODUCT_NAME, PRODUCT_TAGLINE, PageGridSkeleton, type PhoneCountry, PhoneCountrySelect, type PhoneCountrySelectProps, PhoneInput, type PhoneInputProps, type PhoneIssue, type PhoneValidation, QueryErrorState, REGIONS, RESERVED_SLUGS, type Region, type RegionCode, SEOHead, SIGNUP_PATH, SUPPORTED_CODES, SUPPORTED_LANGUAGES, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectScrollDownButton, SelectScrollUpButton, SelectSeparator, SelectTrigger, SelectValue, ShellSkeleton, Skeleton, SkeletonContent, SkeletonGroup, StructuredData, type SupportedLanguageCode, TENANT_ROOT_DOMAINS, type Tenant, Textarea, UserAvatar, activateProps, addBreadcrumb, applyNoindexForAppHost, badgeEmbedCode, badgeVariants, buildAppUrl, buttonVariants, cn, convert, countryForDialCode, currencyForCountry, detectCountry, detectCurrency, dialCodeForCountry, faqs, formatPhoneDisplay, formatTelHref, getEffectiveHostname, getInitials, getLayoutHint, getOrgSlugFromHostname, getReadingTimeMinutes, getRegion, getRelatedPosts, getSidebarWidthClass, getStoredConsent, goToApp, hreflangAlternates, identifyAnalytics, identifyUser, initLandingPostHog, interactiveSurface, isAppHost, isSupportedLanguage, loadGatedScripts, nestedOverlayLayer, normalizeError, normalizeLocalNumber, phoneCountry, phoneCountryFromGeo, phoneMessage, publishedRegions, regionUrl, reportError, reportMessage, resolveEuGated, resolveRegion, resolveTenant, scheduleLandingPostHogInit, selectTriggerClass, setStoredConsent, stripRegion, tokenValue, trackCta, trackEvent, trackSignupStart, useLandingCurrency, validatePhone, withAttribution };
+/**
+ * Branded end-of-post CTA — nudges readers from the blog/guide into a demo.
+ * Shared by the guides, the landing blog and the in-app blog.
+ *
+ * In-site nav (not goToApp): /demo lives on this same origin, so a hard
+ * cross-origin jump to app.classquill.com would be wrong here.
+ *
+ * `variant="cta"` is what every other primary marketing CTA uses — it carries
+ * the brand gradient and opts into `--button-radius-primary`, which resolves per
+ * surface with no work here: a pill under `[data-surface="landing"]` (guides,
+ * landing blog) and the app's `--control-radius` on the in-app blog. The icon is
+ * a calendar to match every other "Book a demo" on the site; it previously used
+ * an arrow, which read as "next page" rather than "book something".
+ */
+declare function BlogEndCta(): React$1.JSX.Element;
+
+export { AI_INTEGRATION_EMAIL, AI_INTEGRATION_MAILTO, AI_INTEGRATION_SUBJECT, APP_STORE_URL, APP_URL, type AuthorSocialLinks, BADGE_BASE_URL, BASE_URL, Badge, type BadgeVariant, type BlogAuthor, type BlogBrand, BlogEndCta, type BlogPost, type BlogPostMeta, type Breadcrumb, Button, CONSENT_EVENT, CONSENT_STORAGE_KEY, CONTACT_EMAIL, CONTACT_MAILTO, CONTACT_PATH, COUNTRY_CODES, CURRENCIES, Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardListSkeleton, CardTitle, ChatSkeleton, type ConsentDecision, type CtaLocation, type Currency, type CurrencyCode, DEFAULT_COUNTRY_CODE, DEFAULT_CURRENCY, DEFAULT_PHONE_COUNTRY, DEFAULT_REGION, DEMO_PATH, EQUATEIT_URL, EU_COOKIE_NAME, Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyState, EmptyTitle, FIND_A_TUTOR_PATH, Field, FieldContent, FieldDescription, FieldError, FieldGroup, FieldLabel, FieldLegend, FieldSeparator, FieldSet, FieldTitle, GOOGLE_PLAY_URL, IconTile, type IconTileProps, Input, type InteractiveSurfaceVariants, ItemListSkeleton, LINKEDIN_URL, Label, type LandingCtaId, type LandingFaq, LandingSEOHead, type Language, type LayoutHint, type NormalizedError, PHONE_COUNTRIES, PRICING_PATH, PRODUCT_NAME, PRODUCT_TAGLINE, PageGridSkeleton, type PhoneCountry, PhoneCountrySelect, type PhoneCountrySelectProps, PhoneInput, type PhoneInputProps, type PhoneIssue, type PhoneValidation, QueryErrorState, REGIONS, RESERVED_SLUGS, type Region, type RegionCode, SEOHead, SIGNUP_PATH, SUPPORTED_CODES, SUPPORTED_LANGUAGES, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectScrollDownButton, SelectScrollUpButton, SelectSeparator, SelectTrigger, SelectValue, Separator, ShellSkeleton, Skeleton, SkeletonContent, SkeletonGroup, StructuredData, type SupportedLanguageCode, TENANT_ROOT_DOMAINS, type Tenant, Textarea, UserAvatar, activateProps, addBreadcrumb, applyNoindexForAppHost, badgeEmbedCode, badgeVariants, buildAppUrl, buttonVariants, cn, convert, countryForDialCode, currencyForCountry, detectCountry, detectCurrency, dialCodeForCountry, faqs, formatPhoneDisplay, formatTelHref, getEffectiveHostname, getInitials, getLayoutHint, getOrgSlugFromHostname, getReadingTimeMinutes, getRegion, getRelatedPosts, getSidebarWidthClass, getStoredConsent, goToApp, hreflangAlternates, identifyAnalytics, identifyUser, initLandingPostHog, interactiveSurface, isAppHost, isSupportedLanguage, loadGatedScripts, nestedOverlayLayer, normalizeError, normalizeLocalNumber, phoneCountry, phoneCountryFromGeo, phoneMessage, publishedRegions, regionUrl, reportError, reportMessage, resolveEuGated, resolveRegion, resolveTenant, scheduleLandingPostHogInit, selectTriggerClass, setStoredConsent, stripRegion, tokenValue, trackCta, trackEvent, trackSignupStart, useLandingCurrency, validatePhone, withAttribution };

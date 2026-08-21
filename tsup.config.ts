@@ -35,6 +35,6 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   splitting: false,
-  external: ["react", "react-dom", "react-i18next", "flag-icons/css/flag-icons.min.css"],
+  external: ["react", "react-dom", "react-i18next", "react-router-dom", "flag-icons/css/flag-icons.min.css"],
   esbuildPlugins: [atAlias],
 });

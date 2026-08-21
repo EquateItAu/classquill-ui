@@ -1,6 +1,9 @@
 // Design system
 export * from "@/components/ui/badge";
 export * from "@/components/ui/button";
+export * from "@/components/ui/card";
+export * from "@/components/ui/field";
+export * from "@/components/ui/separator";
 export * from "@/components/ui/empty";
 export * from "@/components/ui/empty-state";
 export * from "@/components/ui/icon-tile";
@@ -45,3 +48,6 @@ export { default as StructuredData } from "@/seo/StructuredData";
 export * from "@/seo/LandingSEOHead";
 export { default as LandingSEOHead } from "@/seo/LandingSEOHead";
 export { default as SEOHead } from "@/seo/SEOHead";
+
+// Marketing content blocks (shared by guides, landing blog, in-app blog)
+export { default as BlogEndCta } from "@/marketing/BlogEndCta";
