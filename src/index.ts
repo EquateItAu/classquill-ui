@@ -25,7 +25,6 @@ export * from "@/lib/format/blogReadingTime";
 export * from "@/lib/gdprConsent";
 export * from "@/lib/landingAnalytics";
 export * from "@/lib/layout-config";
-export * from "@/lib/native";
 export * from "@/lib/orgSubdomain";
 export * from "@/lib/phone";
 export * from "@/lib/sentry";

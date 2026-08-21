@@ -1423,40 +1423,6 @@ function withAttribution(path, ctaId) {
   return `${path}${sep}${params.toString()}`;
 }
 
-// src/lib/native.ts
-import { Capacitor } from "@capacitor/core";
-import { Browser } from "@capacitor/browser";
-
-// src/hooks/platform/use-mobile.ts
-import * as React4 from "react";
-var MOBILE_BREAKPOINT = 768;
-
-// src/lib/native.ts
-function isIPadWeb() {
-  return /iPad/.test(navigator.userAgent) || navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1;
-}
-function getDeviceClass() {
-  const platform = Capacitor.getPlatform();
-  if (platform === "android") return "mobile";
-  if (platform === "ios") return window.innerWidth >= MOBILE_BREAKPOINT ? "tablet" : "mobile";
-  if (isIPadWeb()) return "tablet";
-  if (window.innerWidth < MOBILE_BREAKPOINT) return "mobile";
-  return "desktop";
-}
-function isNative() {
-  return Capacitor.isNativePlatform();
-}
-function getPlatform() {
-  return Capacitor.getPlatform();
-}
-async function openExternalUrl(url) {
-  if (Capacitor.isNativePlatform()) {
-    await Browser.open({ url });
-  } else {
-    window.open(url, "_blank", "noopener,noreferrer");
-  }
-}
-
 // src/lib/orgSubdomain.ts
 var TENANT_ROOT_DOMAINS = ["equateit.com.au", "classquill.com"];
 var RESERVED_SLUGS = /* @__PURE__ */ new Set([
@@ -1651,7 +1617,7 @@ var APP_STORE_URL = "https://apps.apple.com/app/id6766400569";
 var GOOGLE_PLAY_URL = "https://play.google.com/store/apps/details?id=com.equateit.app";
 
 // src/regions.ts
-import { useEffect as useEffect3, useState as useState4 } from "react";
+import { useEffect as useEffect2, useState as useState3 } from "react";
 var REGIONS = [
   {
     code: "au",
@@ -1796,8 +1762,8 @@ function detectCountry() {
   return void 0;
 }
 function useLandingCurrency() {
-  const [currencyCode, setCurrencyCode] = useState4(DEFAULT_CURRENCY);
-  useEffect3(() => {
+  const [currencyCode, setCurrencyCode] = useState3(DEFAULT_CURRENCY);
+  useEffect2(() => {
     setCurrencyCode(detectCurrency());
   }, []);
   return CURRENCIES[currencyCode];
@@ -2073,12 +2039,10 @@ export {
   faqs,
   formatPhoneDisplay,
   formatTelHref,
-  getDeviceClass,
   getEffectiveHostname,
   getInitials,
   getLayoutHint,
   getOrgSlugFromHostname,
-  getPlatform,
   getReadingTimeMinutes,
   getRegion,
   getRelatedPosts,
@@ -2091,13 +2055,11 @@ export {
   initLandingPostHog,
   interactiveSurface,
   isAppHost,
-  isNative,
   isSupportedLanguage,
   loadGatedScripts,
   nestedOverlayLayer,
   normalizeError,
   normalizeLocalNumber,
-  openExternalUrl,
   phoneCountry,
   phoneCountryFromGeo,
   phoneMessage,
