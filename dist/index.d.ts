@@ -2,6 +2,7 @@ import * as class_variance_authority_types from 'class-variance-authority/types'
 import * as React$1 from 'react';
 import { ReactNode, KeyboardEvent, Ref, ComponentProps } from 'react';
 import { VariantProps } from 'class-variance-authority';
+import useEmblaCarousel, { UseEmblaCarouselType } from 'embla-carousel-react';
 import { Label as Label$1, Separator as Separator$1, Select as Select$1 } from 'radix-ui';
 import { CountryCode } from 'libphonenumber-js/max';
 export { CountryCode } from 'libphonenumber-js/max';
@@ -51,6 +52,38 @@ declare function CardDescription({ className, ...props }: React$1.ComponentProps
 declare function CardAction({ className, ...props }: React$1.ComponentProps<"div">): React$1.JSX.Element;
 declare function CardContent({ className, ...props }: React$1.ComponentProps<"div">): React$1.JSX.Element;
 declare function CardFooter({ className, ...props }: React$1.ComponentProps<"div">): React$1.JSX.Element;
+
+type CarouselApi = UseEmblaCarouselType[1];
+type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
+type CarouselOptions = UseCarouselParameters[0];
+type CarouselPlugin = UseCarouselParameters[1];
+type CarouselProps = {
+    opts?: CarouselOptions;
+    plugins?: CarouselPlugin;
+    orientation?: "horizontal" | "vertical";
+    setApi?: (api: CarouselApi) => void;
+};
+type CarouselContextProps = {
+    carouselRef: ReturnType<typeof useEmblaCarousel>[0];
+    api: ReturnType<typeof useEmblaCarousel>[1];
+    scrollPrev: () => void;
+    scrollNext: () => void;
+    canScrollPrev: boolean;
+    canScrollNext: boolean;
+} & CarouselProps;
+declare function useCarousel(): CarouselContextProps;
+declare function Carousel({ orientation, opts, setApi, plugins, className, children, ...props }: React$1.ComponentProps<"div"> & CarouselProps): React$1.JSX.Element;
+declare function CarouselContent({ className, ...props }: React$1.ComponentProps<"div">): React$1.JSX.Element;
+declare function CarouselItem({ className, ...props }: React$1.ComponentProps<"div">): React$1.JSX.Element;
+declare function CarouselPrevious({ className, variant, size, ...props }: React$1.ComponentProps<typeof Button>): React$1.JSX.Element;
+/**
+ * Dot pagination — one dot per slide, active one wider, tap to jump. The
+ * swipe/drag gesture is the primary interaction (Embla handles that natively);
+ * dots exist so a touch user sees a slide count and current position without
+ * needing < > arrows, which read as a desktop/mouse affordance.
+ */
+declare function CarouselDots({ className, ...props }: React$1.ComponentProps<"div">): React$1.JSX.Element | null;
+declare function CarouselNext({ className, variant, size, ...props }: React$1.ComponentProps<typeof Button>): React$1.JSX.Element;
 
 declare function Label({ className, ...props }: React$1.ComponentProps<typeof Label$1.Root>): React$1.JSX.Element;
 
@@ -628,6 +661,17 @@ interface UserAvatarProps {
 }
 declare function UserAvatar({ name, email, avatarUrl, size, className }: UserAvatarProps): React$1.JSX.Element;
 
+declare const MOBILE_BREAKPOINT = 768;
+/**
+ * @deprecated Prefer `useIsMd()` in new code (see frontend/CLAUDE.md). Kept for
+ * the existing call sites; the unmeasurable-width fallback is `false` (desktop),
+ * matching its long-standing `undefined` initial state.
+ */
+declare function useIsMobile(): boolean;
+declare function useIsLg(): boolean;
+declare function useIsMd(): boolean;
+declare function useIsSm(): boolean;
+
 type EventProps = Record<string, string | number | boolean | null | undefined>;
 /**
  * Identify the signed-in user to PostHog, or reset on sign-out.
@@ -1110,4 +1154,4 @@ declare function LandingSEOHead(props: Props): React$1.JSX.Element;
  */
 declare function BlogEndCta(): React$1.JSX.Element;
 
-export { AI_INTEGRATION_EMAIL, AI_INTEGRATION_MAILTO, AI_INTEGRATION_SUBJECT, APP_STORE_URL, APP_URL, type AuthorSocialLinks, BADGE_BASE_URL, BASE_URL, Badge, type BadgeVariant, type BlogAuthor, type BlogBrand, BlogEndCta, type BlogPost, type BlogPostMeta, type Breadcrumb, Button, CONSENT_EVENT, CONSENT_STORAGE_KEY, CONTACT_EMAIL, CONTACT_MAILTO, CONTACT_PATH, COUNTRY_CODES, CURRENCIES, Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardListSkeleton, CardTitle, ChatSkeleton, type ConsentDecision, type CtaLocation, type Currency, type CurrencyCode, DEFAULT_COUNTRY_CODE, DEFAULT_CURRENCY, DEFAULT_PHONE_COUNTRY, DEFAULT_REGION, DEMO_PATH, EQUATEIT_URL, EU_COOKIE_NAME, Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyState, EmptyTitle, FIND_A_TUTOR_PATH, Field, FieldContent, FieldDescription, FieldError, FieldGroup, FieldLabel, FieldLegend, FieldSeparator, FieldSet, FieldTitle, GOOGLE_PLAY_URL, IconTile, type IconTileProps, Input, type InteractiveSurfaceVariants, ItemListSkeleton, LINKEDIN_URL, Label, type LandingCtaId, type LandingFaq, LandingSEOHead, type Language, type LayoutHint, type NormalizedError, PHONE_COUNTRIES, PRICING_PATH, PRODUCT_NAME, PRODUCT_TAGLINE, PageGridSkeleton, type PhoneCountry, PhoneCountrySelect, type PhoneCountrySelectProps, PhoneInput, type PhoneInputProps, type PhoneIssue, type PhoneValidation, QueryErrorState, REGIONS, RESERVED_SLUGS, type Region, type RegionCode, SEOHead, SIGNUP_PATH, SUPPORTED_CODES, SUPPORTED_LANGUAGES, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectScrollDownButton, SelectScrollUpButton, SelectSeparator, SelectTrigger, SelectValue, Separator, ShellSkeleton, Skeleton, SkeletonContent, SkeletonGroup, StructuredData, type SupportedLanguageCode, TENANT_ROOT_DOMAINS, type Tenant, Textarea, UserAvatar, activateProps, addBreadcrumb, applyNoindexForAppHost, badgeEmbedCode, badgeVariants, buildAppUrl, buttonVariants, cn, convert, countryForDialCode, currencyForCountry, detectCountry, detectCurrency, dialCodeForCountry, faqs, formatPhoneDisplay, formatTelHref, getEffectiveHostname, getInitials, getLayoutHint, getOrgSlugFromHostname, getReadingTimeMinutes, getRegion, getRelatedPosts, getSidebarWidthClass, getStoredConsent, goToApp, hreflangAlternates, identifyAnalytics, identifyUser, initLandingPostHog, interactiveSurface, isAppHost, isSupportedLanguage, loadGatedScripts, nestedOverlayLayer, normalizeError, normalizeLocalNumber, phoneCountry, phoneCountryFromGeo, phoneMessage, publishedRegions, regionUrl, reportError, reportMessage, resolveEuGated, resolveRegion, resolveTenant, scheduleLandingPostHogInit, selectTriggerClass, setStoredConsent, stripRegion, tokenValue, trackCta, trackEvent, trackSignupStart, useLandingCurrency, validatePhone, withAttribution };
+export { AI_INTEGRATION_EMAIL, AI_INTEGRATION_MAILTO, AI_INTEGRATION_SUBJECT, APP_STORE_URL, APP_URL, type AuthorSocialLinks, BADGE_BASE_URL, BASE_URL, Badge, type BadgeVariant, type BlogAuthor, type BlogBrand, BlogEndCta, type BlogPost, type BlogPostMeta, type Breadcrumb, Button, CONSENT_EVENT, CONSENT_STORAGE_KEY, CONTACT_EMAIL, CONTACT_MAILTO, CONTACT_PATH, COUNTRY_CODES, CURRENCIES, Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardListSkeleton, CardTitle, Carousel, type CarouselApi, CarouselContent, CarouselDots, CarouselItem, CarouselNext, CarouselPrevious, ChatSkeleton, type ConsentDecision, type CtaLocation, type Currency, type CurrencyCode, DEFAULT_COUNTRY_CODE, DEFAULT_CURRENCY, DEFAULT_PHONE_COUNTRY, DEFAULT_REGION, DEMO_PATH, EQUATEIT_URL, EU_COOKIE_NAME, Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyState, EmptyTitle, FIND_A_TUTOR_PATH, Field, FieldContent, FieldDescription, FieldError, FieldGroup, FieldLabel, FieldLegend, FieldSeparator, FieldSet, FieldTitle, GOOGLE_PLAY_URL, IconTile, type IconTileProps, Input, type InteractiveSurfaceVariants, ItemListSkeleton, LINKEDIN_URL, Label, type LandingCtaId, type LandingFaq, LandingSEOHead, type Language, type LayoutHint, MOBILE_BREAKPOINT, type NormalizedError, PHONE_COUNTRIES, PRICING_PATH, PRODUCT_NAME, PRODUCT_TAGLINE, PageGridSkeleton, type PhoneCountry, PhoneCountrySelect, type PhoneCountrySelectProps, PhoneInput, type PhoneInputProps, type PhoneIssue, type PhoneValidation, QueryErrorState, REGIONS, RESERVED_SLUGS, type Region, type RegionCode, SEOHead, SIGNUP_PATH, SUPPORTED_CODES, SUPPORTED_LANGUAGES, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectScrollDownButton, SelectScrollUpButton, SelectSeparator, SelectTrigger, SelectValue, Separator, ShellSkeleton, Skeleton, SkeletonContent, SkeletonGroup, StructuredData, type SupportedLanguageCode, TENANT_ROOT_DOMAINS, type Tenant, Textarea, UserAvatar, activateProps, addBreadcrumb, applyNoindexForAppHost, badgeEmbedCode, badgeVariants, buildAppUrl, buttonVariants, cn, convert, countryForDialCode, currencyForCountry, detectCountry, detectCurrency, dialCodeForCountry, faqs, formatPhoneDisplay, formatTelHref, getEffectiveHostname, getInitials, getLayoutHint, getOrgSlugFromHostname, getReadingTimeMinutes, getRegion, getRelatedPosts, getSidebarWidthClass, getStoredConsent, goToApp, hreflangAlternates, identifyAnalytics, identifyUser, initLandingPostHog, interactiveSurface, isAppHost, isSupportedLanguage, loadGatedScripts, nestedOverlayLayer, normalizeError, normalizeLocalNumber, phoneCountry, phoneCountryFromGeo, phoneMessage, publishedRegions, regionUrl, reportError, reportMessage, resolveEuGated, resolveRegion, resolveTenant, scheduleLandingPostHogInit, selectTriggerClass, setStoredConsent, stripRegion, tokenValue, trackCta, trackEvent, trackSignupStart, useCarousel, useIsLg, useIsMd, useIsMobile, useIsSm, useLandingCurrency, validatePhone, withAttribution };

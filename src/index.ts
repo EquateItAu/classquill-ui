@@ -2,6 +2,7 @@
 export * from "@/components/ui/badge";
 export * from "@/components/ui/button";
 export * from "@/components/ui/card";
+export * from "@/components/ui/carousel";
 export * from "@/components/ui/field";
 export * from "@/components/ui/separator";
 export * from "@/components/ui/empty";
@@ -19,6 +20,9 @@ export * from "@/components/ui/skeleton";
 export * from "@/components/ui/skeleton-compounds";
 export * from "@/components/ui/textarea";
 export * from "@/components/ui/user-avatar";
+
+// Platform hooks
+export * from "@/hooks/platform/use-mobile";
 
 // Lib utilities
 export * from "@/lib/analytics";
