@@ -32,7 +32,13 @@ export default defineConfig({
   entry: ["src/index.ts"],
   format: ["esm"],
   dts: true,
-  sourcemap: true,
+  // Off: dist/ is committed to git (consumers install this repo directly,
+  // no install-time build - see package.json), and a sourcemap embeds the
+  // building machine's absolute src/ path, so it diffs on every rebuild
+  // even when index.js/index.d.ts are byte-identical - which defeats the
+  // dist-freshness CI check (npm run check:dist) that relies on a clean
+  // `git diff --exit-code dist/` after a fresh build.
+  sourcemap: false,
   clean: true,
   splitting: false,
   external: ["react", "react-dom", "react-i18next", "react-router-dom", "flag-icons/css/flag-icons.min.css"],

@@ -41,10 +41,14 @@ import { Button, cn, PRODUCT_NAME } from "@classquill/ui";
 
 ## Build
 
+`dist/` is committed to git — consumers install this repo directly as a git dependency and get
+no install-time build step, so it must always match a fresh build of `src/`. CI enforces this
+(`npm run check:dist`); if you change `src/`, rebuild and commit `dist/` in the same PR.
+
 ```bash
 npm install
-npm run typecheck   # tsc --noEmit
-npm run build        # tsup -> dist/ (ESM + .d.ts)
+npm run typecheck    # tsc --noEmit
+npm run build         # tsup -> dist/ (ESM + .d.ts) - commit the result
 ```
 
 ## Publishing
