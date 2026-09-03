@@ -1,0 +1,30 @@
+name: dist freshness
+
+# dist/ is committed to git (consumers install this repo directly via a git
+# dependency and get no install-time build step - see README/package.json),
+# so it must always match a fresh build of src/. This is the only thing
+# stopping that drift silently: any PR that changes src/ without rebuilding
+# dist/ fails here.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check-dist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Rebuild and diff dist/
+        run: npm run check:dist
