@@ -1,0 +1,81 @@
+/*
+ * @classquill/ui/tokens.css — the ONE place the shared type-scale roles are declared.
+ * Consumers (classquill-landing, the app's frontend/) import it right after Tailwind:
+ *   @import "tailwindcss";
+ *   @import "@classquill/ui/tokens.css";
+ * and must NOT re-declare any key below — especially not inside `@theme inline`: Tailwind's
+ * last-writer-wins keeps the writer's inline-ness, which bakes the literal into the utility
+ * and silently kills the surface override. Call sites use the role only (`text-display`);
+ * the responsive steps live here, per surface. `[data-surface="landing"]` is the marketing
+ * surface both consumers already set on their marketing shell; `.dark [data-surface="landing"]`
+ * must never carry `--text-*` (its (0,2,0) specificity would freeze the responsive steps).
+ * Escape hatch for one heading that must not step: `[--text-display:1.25rem]` on the element.
+ * Not here yet (still declared per consumer, next candidates to move): `--control-height-touch`,
+ * `--button-radius*`, `--sidebar-icon-size`. `--text-sm` is deliberately NOT overridden.
+ * Bump `version` in package.json on every change to this file.
+ */
+
+/* App base (mobile-first). Plain @theme, never inline: utilities must emit var(--text-<role>). */
+@theme {
+  --text-display: 1.5rem;
+  --text-display--line-height: 2rem;
+  --text-title: 1.125rem;
+  --text-title--line-height: 1.75rem;
+  --text-subtitle: 1rem;
+  --text-subtitle--line-height: 1.5rem;
+  --text-heading: 0.875rem;
+  --text-heading--line-height: 1.25rem;
+}
+
+/* App steps: one step up at sm, then plateau. */
+:root {
+  @variant sm {
+    --text-display: 1.875rem;
+    --text-display--line-height: 2.25rem;
+    --text-title: 1.25rem;
+    --text-title--line-height: 1.75rem;
+    --text-subtitle: 1.125rem;
+    --text-subtitle--line-height: 1.75rem;
+    --text-heading: 1rem;
+    --text-heading--line-height: 1.5rem;
+  }
+}
+
+/* Marketing surface — the LIVE classquill.com values as of 2026-09-20:
+ * display = hero 36/48/60px, title = section heading 30/36/48px. Ratio line-heights
+ * where the live site used them so size + leading keep moving together per step. */
+[data-surface="landing"] {
+  --text-display: 2.25rem;
+  --text-display--line-height: calc(2.5 / 2.25);
+  --text-title: 1.875rem;
+  --text-title--line-height: calc(2.25 / 1.875);
+  --text-subtitle: 1.25rem;
+  --text-subtitle--line-height: calc(1.75 / 1.25);
+  --text-heading: 1rem;
+  --text-heading--line-height: 1.5;
+
+  @variant sm {
+    --text-display: 3rem;
+    --text-display--line-height: 1;
+    --text-subtitle: 1.625rem;
+    --text-subtitle--line-height: 2rem;
+    --text-heading: 1.125rem;
+    --text-heading--line-height: 1.75rem;
+  }
+
+  @variant md {
+    --text-title: 2.25rem;
+    --text-title--line-height: calc(2.5 / 2.25);
+  }
+
+  @variant lg {
+    --text-display: 3.75rem;
+    --text-display--line-height: 1;
+    --text-title: 3rem;
+    --text-title--line-height: 1;
+    --text-subtitle: 2rem;
+    --text-subtitle--line-height: 2.25rem;
+    --text-heading: 1.25rem;
+    --text-heading--line-height: 1.75rem;
+  }
+}

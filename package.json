@@ -1,6 +1,6 @@
 {
   "name": "@classquill/ui",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Shared design system, brand, and SEO primitives for classquill.com (marketing) and app.classquill.com (product) — presentational only, no auth/data-layer code.",
   "type": "module",
   "main": "./dist/index.js",
@@ -10,7 +10,8 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    }
+    },
+    "./tokens.css": "./dist/tokens.css"
   },
   "files": [
     "dist"

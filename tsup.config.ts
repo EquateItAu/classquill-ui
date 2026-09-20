@@ -43,4 +43,13 @@ export default defineConfig({
   splitting: false,
   external: ["react", "react-dom", "react-i18next", "react-router-dom", "flag-icons/css/flag-icons.min.css"],
   esbuildPlugins: [atAlias],
+  // Ship the shared type-scale tokens verbatim (exported as "@classquill/ui/tokens.css").
+  // Not `publicDir` (it copies a whole directory) and not an esbuild entry (it would get
+  // rewritten). `clean: true` wipes dist/ on every build, so this must run every build.
+  onSuccess: async () => {
+    fs.copyFileSync(
+      path.resolve(__dirname, "src/styles/tokens.css"),
+      path.resolve(__dirname, "dist/tokens.css"),
+    );
+  },
 });

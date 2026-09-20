@@ -39,6 +39,15 @@ npm install @classquill/ui
 import { Button, cn, PRODUCT_NAME } from "@classquill/ui";
 ```
 
+The shared type-scale roles (`text-display` / `text-title` / `text-subtitle` / `text-heading`,
+with their responsive steps per surface) live in `src/styles/tokens.css`. Import it once in the
+consumer's root stylesheet, right after Tailwind, and never re-declare its keys locally:
+
+```css
+@import "tailwindcss";
+@import "@classquill/ui/tokens.css";
+```
+
 ## Build
 
 `dist/` is committed to git — consumers install this repo directly as a git dependency and get
