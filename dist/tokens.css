@@ -12,6 +12,10 @@
  * Escape hatch for one heading that must not step: `[--text-display:1.25rem]` on the element.
  * Not here yet (still declared per consumer, next candidates to move): `--control-height-touch`,
  * `--button-radius*`, `--sidebar-icon-size`. `--text-sm` is deliberately NOT overridden.
+ *
+ * Marketing COLOUR tokens (`--landing-*`, bottom of this file) also live here since 2026-09-21:
+ * both consumers render marketing surfaces (the landing repo, and the app's blog/compare copies),
+ * and the palette is the printed brochure's, so it must not drift between them.
  * Bump `version` in package.json on every change to this file.
  */
 
@@ -68,14 +72,49 @@
     --text-title--line-height: calc(2.5 / 2.25);
   }
 
+  /* lg steps revised 2026-09-21 with the Clash Display -> Inter Tight swap: a plain grotesk
+   * at 60/48px shouts; the brochure's headings sit closer to 52/40px with a little leading. */
   @variant lg {
-    --text-display: 3.75rem;
-    --text-display--line-height: 1;
-    --text-title: 3rem;
-    --text-title--line-height: 1;
+    --text-display: 3.25rem;
+    --text-display--line-height: 1.08;
+    --text-title: 2.5rem;
+    --text-title--line-height: 1.1;
     --text-subtitle: 2rem;
     --text-subtitle--line-height: 2.25rem;
     --text-heading: 1.25rem;
     --text-heading--line-height: 1.75rem;
   }
+}
+
+/* Marketing palette — lifted from the printed trifold (ClassQuill-INSIDE-v2, 2026-09) so print
+ * and web share one look. Consumers reference these directly (`bg-(--landing-ground)`); they are
+ * plain custom properties, not @theme keys, so they never bake into utilities.
+ *   ground   the page background. Cool off-white, NOT pure white — cards are white on top of it.
+ *   band     kept for the older alternating-section pattern (now = card white on the ground).
+ *   accent   icons, eyebrows, small marks. Was amber #d97706 (2026-07-17); the brochure has no
+ *            warm accent and the amber fought the blue brand, so accent is now the brochure sky.
+ *   ink      heading colour (brochure navy) in place of the app's near-black --foreground.
+ *   navy/-2  the ONE dark band per page (brochure centre panel gradient: navy-2 -> navy).
+ *   card-*   the brochure card: white, 1rem radius, soft navy-tinted shadow. */
+[data-surface="landing"] {
+  --landing-ground: #f4f7ff;
+  --landing-band: #ffffff;
+  --landing-accent: #4fa1fd;
+  --landing-ink: #17334b;
+  --landing-navy: #17334b;
+  --landing-navy-2: #25597e;
+  --landing-card: #ffffff;
+  --landing-card-radius: 1rem;
+  --landing-card-shadow: 0 8px 24px rgb(23 51 75 / 0.08);
+}
+
+.dark [data-surface="landing"] {
+  --landing-ground: #0e1523;
+  --landing-band: #172033;
+  --landing-accent: #5fabff;
+  --landing-ink: #eaf1fb;
+  --landing-navy: #101b2c;
+  --landing-navy-2: #1d3a57;
+  --landing-card: #172033;
+  --landing-card-shadow: 0 8px 24px rgb(0 0 0 / 0.35);
 }
