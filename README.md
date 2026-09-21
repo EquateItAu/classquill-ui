@@ -40,7 +40,9 @@ import { Button, cn, PRODUCT_NAME } from "@classquill/ui";
 ```
 
 The shared type-scale roles (`text-display` / `text-title` / `text-subtitle` / `text-heading`,
-with their responsive steps per surface) live in `src/styles/tokens.css`. Import it once in the
+with their responsive steps per surface) and the marketing palette (`--landing-ground`,
+`--landing-accent`, `--landing-ink`, `--landing-navy`, `--landing-card-*` — the printed brochure's
+colours, scoped to `[data-surface="landing"]`) live in `src/styles/tokens.css`. Import it once in the
 consumer's root stylesheet, right after Tailwind, and never re-declare its keys locally:
 
 ```css
